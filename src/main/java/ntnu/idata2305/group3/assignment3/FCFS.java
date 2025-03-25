@@ -28,6 +28,29 @@ public class FCFS {
             processID[i] = i+1;
         }
 
+        // sorts by arrival time and swaps processes if needed.
+        for(int i = 0; i < numbersNeeded - 1; i++) {
+            for(int j = i + 1; j < numbersNeeded; j++) {
+                if(arrivalTime[i] > arrivalTime[j]) {
+
+                    // swaps the arrival times.
+                    int temp = arrivalTime[i];
+                    arrivalTime[i] = arrivalTime[j];
+                    arrivalTime[j] = temp;
+
+                    // swaps the burst times.
+                    temp = burstTime[i];
+                    burstTime[i] = burstTime[j];
+                    burstTime[j] = temp;
+
+                    // swaps the id's.
+                    temp = processID[i];
+                    processID[i] = processID[j];
+                    processID[j] = temp;
+                }
+            }
+        }
+
         // calculates completion time, turnaround time and waiting time.
         for(int i = 0; i < numbersNeeded; i++) {
             if(currentTime < arrivalTime[i]) {
