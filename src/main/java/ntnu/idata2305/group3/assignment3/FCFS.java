@@ -62,10 +62,23 @@ public class FCFS {
             currentTime = completionTime[i];
         }
 
+        // calculates average turnaround time and waiting time.
+        double avgTurnaroundTime = 0;
+        double avgWaitingTime = 0;
+
+        for(int i = 0; i < numbersNeeded; i++) {
+            avgTurnaroundTime += turnaroundTime[i];
+            avgWaitingTime += waitingTime[i];
+        }
+
+        avgWaitingTime /= numbersNeeded;
+        avgTurnaroundTime /= numbersNeeded;
+
         // prints out all relevant values.
         for(int i = 0; i < numbersNeeded; i++) {
             System.out.println("Process ID: " + processID[i] + " Arrival Time: " + arrivalTime[i] + " Burst Time: " + burstTime[i] +
-                    " Completion Time: " + completionTime[i] + " Waiting Time: " + waitingTime[i] + " Turnaround Time: " + turnaroundTime[i]);
+                    " Completion Time: " + completionTime[i] + " Turnaround Time: " + turnaroundTime[i] + " Waiting Time: " + waitingTime[i] );
+            System.out.println("Average Turnaround Time: " + avgTurnaroundTime + " Average Waiting Time: " + avgWaitingTime);
         }
     }
 }
