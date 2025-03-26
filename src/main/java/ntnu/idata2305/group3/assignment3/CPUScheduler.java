@@ -1,21 +1,30 @@
 package ntnu.idata2305.group3.assignment3;
 
-import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class CPUScheduler {
+public class CPUScheduler implements Runnable{
 
-  private final Queue<IO> processQueue;
+  private final Queue<Task> taskQueue;
+  private final CPU cpu;
 
-  public CPUScheduler() {
-    this.processQueue = new LinkedList<>();
+  public CPUScheduler(CPU cpu) {
+    this.taskQueue = new PriorityQueue<>();
+    this.cpu = cpu;
   }
 
-  public void queueProcess(IO io) {
-    this.processQueue.offer(io);
+  @Override
+  public void run() {
+    while (true) {
+      if (!this.taskQueue.isEmpty()
+          && (cpu.getCurrentTask() == null
+          || this.taskQueue.element().getPriority() > this.cpu.getCurrentTask().getPriority())) {
+        this.cpu.setCurrentTask(this.taskQueue.poll());
+      }
+    }
   }
 
-  public IO getProcess() {
-    return this.processQueue.poll();
+  public synchronized void queueProcess(Task task) {
+    this.taskQueue.offer(task);
   }
 }
