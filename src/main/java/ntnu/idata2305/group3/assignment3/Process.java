@@ -7,6 +7,7 @@ public class Process{
   private int burstTime;
   private int remainingBurst;
   private int priority;
+  private int completionTime;
 
   public Process(int id, int arrivalTime, int burstTime, int priority) {
     this.id = id;
@@ -48,11 +49,15 @@ public class Process{
     this.priority = priority;
   }
 
-  public void subtractBurst(int subValue) {
-    if (subValue > this.remainingBurst) {
-      this.remainingBurst = 0;
-    } else {
-      this.remainingBurst -= subValue;
-    }
+  public void subtractBurst(int timeExecuted) {
+    this.remainingBurst = Math.max(0, this.remainingBurst - timeExecuted);
+  }
+
+  public int getCompletionTime() {
+    return this.completionTime;
+  }
+
+  public void setCompletionTime(int completionTime) {
+    this.completionTime = completionTime;
   }
 }
